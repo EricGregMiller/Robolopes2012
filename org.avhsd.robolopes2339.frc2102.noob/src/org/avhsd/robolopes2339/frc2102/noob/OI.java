@@ -27,7 +27,7 @@ public class OI {
 		return shoot.get();
 	}
 	
-	public BallCollectState getBallCollect() {
+	public int getBallCollect() {
 		if (ballCollect.get()) {
 			return BallCollectState.Collect;
 		} else if (ballEject.get()) {
@@ -36,14 +36,14 @@ public class OI {
 		return BallCollectState.Stop;
 	}
 	
-	public BallShootingState getBallShoot() {
+	public int getBallShoot() {
 		if (shoot.get()) {
 			return BallShootingState.Long;
 		}
 		return BallShootingState.Stop;
 	}
 	
-	public RampLeverState getRampLever() {
+	public int getRampLever() {
 		if (rampLeverDown.get()) {
 			return RampLeverState.MoveDown;
 		} else if (rampLeverUp.get()) {

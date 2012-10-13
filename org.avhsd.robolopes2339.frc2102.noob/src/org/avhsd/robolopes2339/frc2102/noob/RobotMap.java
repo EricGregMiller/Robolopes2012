@@ -29,8 +29,8 @@ public class RobotMap {
             frontRightMotor = 3,
             rearRightMotor = 4,
 
-            conveyorMotor = 5,
-            rampLeverMotor = 6, 
+            conveyorMotor = 6,
+            rampLeverMotor = 5, 
             shootMotor1 = 7,
             shootMotor2 = 8; 
 

@@ -21,10 +21,10 @@ public class RampLeverSystem extends Subsystem {
     private double downSpeed = 0.5;
     private double upSpeed = -0.5;
 
-	public enum RampLeverState {
-		Stop,
-		MoveDown,
-		MoveUp;
+	public static class RampLeverState {
+		public final static int Stop = 0,
+		MoveDown = 1,
+		MoveUp = 2;
 	}
 	
     public void initDefaultCommand() {
@@ -48,16 +48,16 @@ public class RampLeverSystem extends Subsystem {
      * @param ballCollect Set state of ball collector.
      * 
      */
-    public void setRampLever(RampLeverState rampLever){
+    public void setRampLever(int rampLever){
         System.out.println("RampLeverSystem setRampLever");
         switch (rampLever) {
-        case Stop:
+        case RampLeverState.Stop:
         	motorDrive.set(0);
         	break;
-        case MoveDown:
+        case RampLeverState.MoveDown:
         	motorDrive.set(downSpeed);
         	break;
-        case MoveUp:
+        case RampLeverState.MoveUp:
         	motorDrive.set(upSpeed);
         	break;
         }

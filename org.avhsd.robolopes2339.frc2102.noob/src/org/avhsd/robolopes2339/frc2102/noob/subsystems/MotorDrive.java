@@ -1,7 +1,6 @@
 package org.avhsd.robolopes2339.frc2102.noob.subsystems;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.MotorSafetyHelper;
@@ -21,7 +20,7 @@ public class MotorDrive implements MotorSafety, IUtility {
     private final static boolean EnableSafety = false;
     public static final double DefaultExpirationTime = 0.1;
     
-	private List<SpeedController> speedControllers = new ArrayList<SpeedController>();
+	private Vector speedControllers = new Vector();
 	
     /*
      * Set up motor safety
@@ -56,20 +55,17 @@ public class MotorDrive implements MotorSafety, IUtility {
     }
     
     public void addMotor(int motorChannel) {
-    	speedControllers.add(new Victor(motorChannel));
+    	speedControllers.addElement(new Victor(motorChannel));
     }
 
-	@Override
 	public void setExpiration(double timeout) {
         safetyHelper.setExpiration(timeout);
 	}
 
-	@Override
 	public double getExpiration() {
         return safetyHelper.getExpiration();
 	}
 
-	@Override
 	public boolean isAlive() {
         return safetyHelper.isAlive();
 	}
@@ -89,8 +85,8 @@ public class MotorDrive implements MotorSafety, IUtility {
 
 	public void set(double speed) {
 		double limitedSpeed = limit(speed);
-		for (SpeedController sc : speedControllers) {
-			sc.set(limitedSpeed);
+		for (int iisc = 0; iisc < speedControllers.size(); iisc++) {
+			((SpeedController) speedControllers.elementAt(iisc)).set(limitedSpeed);
 		}
 		
         if (safetyHelper != null) {
@@ -98,23 +94,19 @@ public class MotorDrive implements MotorSafety, IUtility {
         }
 	}
 
-	@Override
 	public void stopMotor() {
 		set(0.0);
 	}
 
-	@Override
 	public void setSafetyEnabled(boolean enabled) {
 		safetyHelper.setSafetyEnabled(enabled);
 		
 	}
 
-	@Override
 	public boolean isSafetyEnabled() {
         return safetyHelper.isSafetyEnabled();
 	}
 
-	@Override
 	public String getDescription() {
         return "Victor Drive";
 	}

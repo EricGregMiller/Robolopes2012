@@ -22,12 +22,12 @@ public class BallShooterSystem extends Subsystem {
     private double mediumSpeed = 0.75;
     private double shortSpeed = 0.5;
     
-    public enum BallShootingState {
-	    	Stop,
-	    	Long,
-	    	Medium, 
-	    	Short, 
-	    	Automatic;
+	public static class BallShootingState {
+		public final static int Stop = 0,
+    	Long = 1,
+    	Medium = 2, 
+    	Short = 3, 
+    	Automatic = 4;
     }
     
     public void initDefaultCommand() {
@@ -48,23 +48,23 @@ public class BallShooterSystem extends Subsystem {
      * @param ballShoot state to set.
      * 
      */
-    public void setShooter(BallShootingState ballShoot){
+    public void setShooter(int ballShoot){
         System.out.println("BallShootingSystem setShooter");
         
         switch (ballShoot) {
-        case Stop:
+        case BallShootingState.Stop:
         	motorDrive.set(0);
         	break;
-        case Long:
+        case BallShootingState.Long:
         	motorDrive.set(longSpeed);
         	break;
-        case Medium:
+        case BallShootingState.Medium:
         	motorDrive.set(mediumSpeed);
         	break;
-        case Short:
+        case BallShootingState.Short:
         	motorDrive.set(shortSpeed);
         	break;
-        case Automatic:
+        case BallShootingState.Automatic:
         	motorDrive.set(longSpeed);
         	break;
         }

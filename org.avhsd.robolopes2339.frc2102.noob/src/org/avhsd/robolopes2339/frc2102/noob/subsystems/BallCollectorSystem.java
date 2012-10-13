@@ -21,10 +21,10 @@ public class BallCollectorSystem extends Subsystem {
     private double collectSpeed = 0.5;
     private double ejectSpeed = -0.5;
 
-    public enum BallCollectState {
-    	Stop,
-    	Collect,
-    	Eject;
+    public static class BallCollectState {
+    	public final static int Stop = 0,
+    	Collect = 1,
+    	Eject = 2;
     }
     
     public void initDefaultCommand() {
@@ -48,16 +48,16 @@ public class BallCollectorSystem extends Subsystem {
      * @param ballCollect Set state of ball collector.
      * 
      */
-    public void setBallCollector(BallCollectState ballCollect){
+    public void setBallCollector(int ballCollect){
         System.out.println("BallCollectorSystem setBallCollector");
         switch (ballCollect) {
-        case Stop:
+        case BallCollectState.Stop:
         	motorDrive.set(0);
         	break;
-        case Collect:
+        case BallCollectState.Collect:
         	motorDrive.set(collectSpeed);
         	break;
-        case Eject:
+        case BallCollectState.Eject:
         	motorDrive.set(ejectSpeed);
         	break;
         }
