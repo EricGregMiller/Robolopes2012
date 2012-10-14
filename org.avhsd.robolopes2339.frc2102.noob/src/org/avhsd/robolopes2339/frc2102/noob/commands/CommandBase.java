@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.avhsd.robolopes2339.frc2102.noob.OI;
 import org.avhsd.robolopes2339.frc2102.noob.subsystems.BallCollectorSystem;
 import org.avhsd.robolopes2339.frc2102.noob.subsystems.BallShooterSystem;
+import org.avhsd.robolopes2339.frc2102.noob.subsystems.CoolingFanSystem;
 import org.avhsd.robolopes2339.frc2102.noob.subsystems.DriveSystem;
 import org.avhsd.robolopes2339.frc2102.noob.subsystems.RampLeverSystem;
 
@@ -18,6 +19,7 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
+    public static CoolingFanSystem coolingFanSystem = new CoolingFanSystem();
     public static DriveSystem driveSystem = new DriveSystem();
     public static BallCollectorSystem ballCollectorSystem = new BallCollectorSystem();
     public static BallShooterSystem ballShooterSystem = new BallShooterSystem();
@@ -32,6 +34,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
 
         // Show what command your subsystem is running on the SmartDashboard
+        SmartDashboard.putData(coolingFanSystem);
         SmartDashboard.putData(driveSystem);
         SmartDashboard.putData(ballCollectorSystem);
         SmartDashboard.putData(ballShooterSystem);

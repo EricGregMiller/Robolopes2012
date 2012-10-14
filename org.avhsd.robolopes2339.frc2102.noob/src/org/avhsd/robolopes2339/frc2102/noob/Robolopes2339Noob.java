@@ -14,6 +14,7 @@ import org.avhsd.robolopes2339.frc2102.noob.commands.CommandBase;
 import org.avhsd.robolopes2339.frc2102.noob.commands.DriveWithJoystick;
 import org.avhsd.robolopes2339.frc2102.noob.commands.MoveRampLever;
 import org.avhsd.robolopes2339.frc2102.noob.commands.ShootBall;
+import org.avhsd.robolopes2339.frc2102.noob.subsystems.CoolingFanSystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,6 +41,10 @@ public class Robolopes2339Noob extends IterativeRobot {
 
         // Initialize all subsystems
         CommandBase.init();
+        
+        // Start cooling fan
+        CoolingFanSystem.getInstance().startFan();
+        
     }
 
     public void autonomousInit() {
