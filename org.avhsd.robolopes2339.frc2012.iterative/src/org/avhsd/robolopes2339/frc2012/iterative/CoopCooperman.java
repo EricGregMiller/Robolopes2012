@@ -30,7 +30,7 @@ public class CoopCooperman extends IterativeRobot {
     Jaguar m_rearLeft  = new Jaguar(3);
     Jaguar m_rearRight = new Jaguar(4);
     
-    RobotDrive mecanum = 
+    RobotDrive robotDrive = 
             new RobotDrive(m_frontLeft, m_rearLeft, m_frontRight, m_rearRight);
     
     
@@ -86,7 +86,12 @@ public class CoopCooperman extends IterativeRobot {
             strafe *= .6;
         }
         
-        mecanumDrive(strafe, throttle, rotation);
+        /*
+         * This controls the robot wheels
+         */
+        
+        //mecanumDrive(strafe, throttle, rotation);
+        robotDrive.arcadeDrive(-throttle, -strafe/0.6, false);
 //        if(driveStick.getRawButton(2)) {
 //            m_frontRight.set(throttle);
 //        } else if(driveStick.getRawButton(3)){
@@ -128,5 +133,64 @@ public class CoopCooperman extends IterativeRobot {
         m_frontRight.set(-fR);
         m_rearLeft.set(rL);
         m_rearRight.set(-rR);
+    }
+    
+    /**
+     * Limit motor values to the -1.0 to +1.0 range.
+     */
+    protected static double limit(double num) {
+        if (num > 1.0) {
+            return 1.0;
+        }
+        if (num < -1.0) {
+            return -1.0;
+        }
+        return num;
+    }
+
+    public void arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
+        // local variables to hold the computed PWM values for the motors
+        double leftMotorSpeed;
+        double rightMotorSpeed;
+        System.out.println("moveValue: " + moveValue + ", rotateValue" + rotateValue);
+
+        moveValue = limit(moveValue);
+        rotateValue = limit(rotateValue);
+
+        if (squaredInputs) {
+            // square the inputs (while preserving the sign) to increase fine control while permitting full power
+            if (moveValue >= 0.0) {
+                moveValue = (moveValue * moveValue);
+            } else {
+                moveValue = -(moveValue * moveValue);
+            }
+            if (rotateValue >= 0.0) {
+                rotateValue = (rotateValue * rotateValue);
+            } else {
+                rotateValue = -(rotateValue * rotateValue);
+            }
+        }
+
+        if (moveValue > 0.0) {
+            if (rotateValue > 0.0) {
+                leftMotorSpeed = moveValue - rotateValue;
+                rightMotorSpeed = Math.max(moveValue, rotateValue);
+            } else {
+                leftMotorSpeed = Math.max(moveValue, -rotateValue);
+                rightMotorSpeed = moveValue + rotateValue;
+            }
+        } else {
+            if (rotateValue > 0.0) {
+                leftMotorSpeed = -Math.max(-moveValue, rotateValue);
+                rightMotorSpeed = moveValue + rotateValue;
+            } else {
+                leftMotorSpeed = moveValue - rotateValue;
+                rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+            }
+        }
+        
+        System.out.println("leftMotorSpeed: " + leftMotorSpeed + ", rightMotorSpeed" + rightMotorSpeed);
+
+        robotDrive.setLeftRightMotorOutputs(leftMotorSpeed, rightMotorSpeed);
     }
 }
